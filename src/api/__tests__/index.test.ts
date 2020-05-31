@@ -16,7 +16,22 @@ const contacts: Contact[] = [
   },
 ]
 
-const postDeleteContacts: Contact[] = [
+const postUpdate: Contact[] = [
+  {
+    id: 0,
+    name: "New Name",
+    phoneNumber: "+7888888888888",
+    address: "New address",
+  },
+  {
+    id: 1,
+    name: "Maida Harju",
+    phoneNumber: "+442032960899",
+    address: "Woodside House, 94 Tockholes Rd, Darwen BB3 1LL, UK",
+  },
+]
+
+const postDelete: Contact[] = [
   {
     id: 1,
     name: "Maida Harju",
@@ -26,11 +41,20 @@ const postDeleteContacts: Contact[] = [
 ]
 
 describe("tests the mocked methods of the api", () => {
-  test("deletion of a contact", async () => {
+  test("local deletion of a contact", async () => {
     expect.assertions(1)
-    const deletedContacts = await PhonebookApi.deleteContactLocal(0, contacts)
+    const deletedContacts = await PhonebookApi.deleteContact(0, contacts)
     expect(deletedContacts).toEqual(
-      postDeleteContacts
+      postDelete
+    )
+  })
+
+  test("local update of a contact", async () => {
+    expect.assertions(1)
+    const newContact: Contact = postUpdate[0]
+    const updatedContacts = await PhonebookApi.updateContact(0, contacts, newContact)
+    expect(updatedContacts).toEqual(
+      postUpdate
     )
   })
 })

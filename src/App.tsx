@@ -26,13 +26,21 @@ function App() {
     loadContacts()
   }, [])
 
-  const deleteContactHandler = (contacts: Contact[]) => (id: number) => {
-    PhoneBookApi.deleteContactLocal(id, contacts)
-      .then((cs) => updateState({ ...state, contacts: cs }));
-  }
+  const deleteContactHandler = (contacts: Contact[]) => (id: number) =>
+    updateState({ ...state, contacts: PhoneBookApi.deleteContact(id, contacts) })
+
+  const updateContactHandler = (contacts: Contact[]) => (id: number, newContact: Contact) =>
+    updateState({ ...state, contacts: PhoneBookApi.updateContact(id, contacts, newContact) })
+
   return (
     <div className="App">
-      {state.loading ? <div>loading...</div> : <ContactsTable contacts={state.contacts} deleteContactHandler={deleteContactHandler(state.contacts)} />}
+      {state.loading ?
+        <div>loading...</div> :
+        <ContactsTable
+          contacts={state.contacts}
+          deleteContactHandler={deleteContactHandler(state.contacts)}
+          updateContactHandler={updateContactHandler(state.contacts)} />
+      }
     </div>
   );
 }
