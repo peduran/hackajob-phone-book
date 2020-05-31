@@ -6,7 +6,7 @@ interface ContactProps {
   deleteContactHandler: (id: number) => void
 }
 
-const ContactRow = ({ contact, deleteContactHandler}: ContactProps) => {
+const ContactRow = ({ contact, deleteContactHandler }: ContactProps) => {
   const handleDelete = () => deleteContactHandler(contact.id)
   return <tr>
     <td>{contact.name}</td>
@@ -15,12 +15,12 @@ const ContactRow = ({ contact, deleteContactHandler}: ContactProps) => {
     <td onClick={handleDelete}>delete</td>
   </tr>
 }
-const deleteC = (id: number) => console.log(id)
 
 interface ContactsTableProps {
   contacts: Contact[]
+  deleteContactHandler: (id: number) => void
 }
-const ContactsTable = ({ contacts }: ContactsTableProps) =>
+const ContactsTable = ({ contacts, deleteContactHandler }: ContactsTableProps) =>
   <table>
     <thead>
       <tr>
@@ -31,7 +31,7 @@ const ContactsTable = ({ contacts }: ContactsTableProps) =>
       </tr>
     </thead>
     <tbody>
-      {contacts.map((c, i) => <ContactRow contact={c} key={i} deleteContactHandler={deleteC} />)}
+      {contacts.map((c, i) => <ContactRow contact={c} key={i} deleteContactHandler={deleteContactHandler} />)}
     </tbody>
   </table>
 

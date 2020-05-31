@@ -9,8 +9,10 @@ interface State {
   loading: boolean
   contacts: Contact[]
 }
+
 function App() {
   const [state, updateState] = useState<State>({ loading: true, contacts: [] })
+
   const loadContacts = async () => {
     try {
       const contacts = await PhoneBookApi.getContacts()
@@ -19,12 +21,18 @@ function App() {
       console.log(e)
     }
   }
+
   useEffect(() => {
     loadContacts()
   }, [])
+
+  const deleteContactHandler = (contacts: Contact[]) => (id: number) => {
+    PhoneBookApi.deleteContactLocal(id, contacts)
+      .then((cs) => updateState({ ...state, contacts: cs }));
+  }
   return (
     <div className="App">
-      {state.loading ? <div>loading...</div> : <ContactsTable contacts={state.contacts} />}
+      {state.loading ? <div>loading...</div> : <ContactsTable contacts={state.contacts} deleteContactHandler={deleteContactHandler(state.contacts)} />}
     </div>
   );
 }
