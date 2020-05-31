@@ -1,11 +1,10 @@
 import { Contact } from "./Contact"
 import { ContactResponse, ContactsResponse } from "../api"
 
-const toContact = ({
-  name,
-  address,
-  phone_number: phoneNumber,
-}: ContactResponse): Contact => ({ address, name, phoneNumber })
+const toContact = (
+  { name, address, phone_number: phoneNumber }: ContactResponse,
+  id: number
+): Contact => ({ id, address, name, phoneNumber })
 
 export const toContacts = (cs: ContactsResponse): Contact[] =>
-  cs.contacts.map(toContact)
+  cs.contacts.map((c, i) => toContact(c, i))

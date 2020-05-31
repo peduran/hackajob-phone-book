@@ -4,6 +4,7 @@ import { toContacts } from "../model/transformations"
 
 export interface PhonebookAPI {
   getContacts: () => Promise<Contact[]>
+  deleteContactLocal: (id: number, contacts: Contact[]) => Promise<Contact[]>
 }
 
 export interface ContactsResponse {
@@ -27,5 +28,11 @@ const getContacts = async () => {
   return toContacts(response.data)
 }
 
-const PhonebookApi: PhonebookAPI = { getContacts }
+const deleteContact = async (id: number, contacts: Contact[]) =>
+  Promise.resolve(contacts.filter((c) => c.id !== id))
+
+const PhonebookApi: PhonebookAPI = {
+  getContacts,
+  deleteContactLocal: deleteContact,
+}
 export default PhonebookApi
