@@ -1,5 +1,5 @@
 import React from "react"
-import { Contact } from "./model/Contact"
+import { Contact } from "../model/Contact"
 
 interface ContactProps {
   contact: Contact
